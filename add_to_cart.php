@@ -16,14 +16,14 @@ $client_phone = $data['client_phone'];
 $cart_items   = $data['cart_items'];
 $total_amount = $data['total_amount'];
 
-// 1. Client Details Save Karein
+// 1. save client details
 $stmt = $conn->prepare("INSERT INTO orders (client_name, client_email, client_phone, total_amount) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("sssd", $client_name, $client_email, $client_phone, $total_amount);
 
 if ($stmt->execute()) {
     $order_id = $conn->insert_id;
 
-    // 2. Ordered Items Save Karein
+    // 2. save order items
     $item_stmt = $conn->prepare("INSERT INTO order_items (order_id, product_name, price, quantity) VALUES (?, ?, ?, ?)");
     foreach ($cart_items as $item) {
         $p_name = $item['name'];
